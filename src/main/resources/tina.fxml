@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="348.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+    <left>
+        <ListView id="image" prefHeight="348.0" prefWidth="155.0" BorderPane.alignment="CENTER" />
+    </left>
+    <right>
+        <ImageView fitHeight="385.0" fitWidth="445.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+        </ImageView>
+    </right>
+</BorderPane>
