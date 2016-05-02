@@ -1,41 +1,28 @@
 package com.comadante.tina;
 
 
-import com.google.common.collect.Maps;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Map;
 
 public class ListData {
 
-    private final ObservableList<String> observableList;
-    private final Map<String, MotionEvent> motionEventMap = Maps.newConcurrentMap();
+    private final ObservableList<MotionEvent> observableList;
 
-    public ListData(ObservableList<String> observableList) {
+    public ListData(ObservableList<MotionEvent> observableList) {
         this.observableList = observableList;
     }
 
     public void add(MotionEvent motionEvent) {
         Platform.runLater(() -> {
-            String formattedDate = getFormattedDate(motionEvent);
-            if (!observableList.contains(formattedDate)) {
-                observableList.add(formattedDate);
+            boolean found = false;
+            for (MotionEvent event: observableList) {
+                if (event.getEventId().equals(motionEvent.getEventId())) {
+                   found = true;
+                }
             }
-            motionEventMap.put(getFormattedDate(motionEvent), motionEvent);
+            if (!found) {
+                observableList.add(motionEvent);
+            }
         });
-    }
-
-    private String getFormattedDate(MotionEvent motionEvent) {
-        Long timestamp = motionEvent.getTimestamp();
-        Date date = new Date(timestamp);
-        return date.toString();
-    }
-
-    public MotionEvent getMotionEvent(String formattedDate) {
-        return motionEventMap.get(formattedDate);
     }
 }

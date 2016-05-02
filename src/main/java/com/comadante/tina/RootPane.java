@@ -15,14 +15,14 @@ import java.util.List;
 
 public class RootPane extends BorderPane {
 
-    private final ListView<String> listView;
+    private final ListView<MotionEvent> listView;
     private final ImageView imageView;
     private final ImageRefreshService imageRefreshService;
 
     public RootPane(EyeballsClient eyeballsClient) {
-        ObservableList<String> names = FXCollections.observableArrayList();
-        listView = new ListView<String>(names);
-        ListData listData = new ListData(names);
+        ObservableList<MotionEvent> events = FXCollections.observableArrayList();
+        listView = new ListView<>(events);
+        ListData listData = new ListData(events);
         this.imageView = new ImageView();
         setCenter(imageView);
         setLeft(listView);
@@ -30,7 +30,7 @@ public class RootPane extends BorderPane {
         this.imageRefreshService.startAsync();
         this.listView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             try {
-                byte[] eventImage = eyeballsClient.getEventImage(listData.getMotionEvent(newValue).getEventId());
+                byte[] eventImage = eyeballsClient.getEventImage(newValue.getEventId());
                 ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(eventImage);
                 Image image = new Image(byteArrayInputStream);
                 imageView.setImage(image);

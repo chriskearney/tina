@@ -25,10 +25,10 @@ public class ImageRefreshService extends AbstractScheduledService {
     }
 
     protected void runOneIteration() throws Exception {
-        byte[] latestImage = eyeballsClient.getLatestImage();
+     /*   byte[] latestImage = eyeballsClient.getLatestImage();
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(latestImage);
         Image image = new Image(byteArrayInputStream);
-        imageView.setImage(image);
+        imageView.setImage(image);*/
         List<MotionEvent> recentMotionEvents = eyeballsClient.getRecentMotionEvents();
         recentMotionEvents.stream().forEach(listData::add);
     }
