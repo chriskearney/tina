@@ -20,7 +20,7 @@ public class EyeballsHttpClient implements EyeballsClient {
 
 
     public List<MotionEvent> getRecentMotionEvents() throws IOException {
-        HttpRequest getRequest = requestFactory.buildGetRequest(new GenericUrl("http://192.168.1.20:4444/event/recent/1000"));
+        HttpRequest getRequest = requestFactory.buildGetRequest(new GenericUrl("http://192.168.1.20:4444/event/recent/100"));
         return objectMapper.readValue(getRequest.execute().parseAsString(), new TypeReference<ArrayList<MotionEvent>>() {});
     }
 

@@ -1,7 +1,5 @@
 package com.comadante.tina;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
@@ -11,7 +9,6 @@ import javafx.scene.layout.BorderPane;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.List;
 
 public class RootPane extends BorderPane {
 
@@ -26,10 +23,17 @@ public class RootPane extends BorderPane {
         this.imageView = new ImageView();
         setCenter(imageView);
         setLeft(listView);
-        this.imageRefreshService = new ImageRefreshService(imageView, listData, eyeballsClient);
+        this.imageRefreshService = new ImageRefreshService(imageView, listView, listData, eyeballsClient);
         this.imageRefreshService.startAsync();
         this.listView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             try {
+                if (newValue.getEventId().equals(MotionEvent.liveview)) {
+                    byte[] latestImage = eyeballsClient.getLatestImage();
+                    ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(latestImage);
+                    Image image = new Image(byteArrayInputStream);
+                    imageView.setImage(image);
+                    return;
+                }
                 byte[] eventImage = eyeballsClient.getEventImage(newValue.getEventId());
                 ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(eventImage);
                 Image image = new Image(byteArrayInputStream);
