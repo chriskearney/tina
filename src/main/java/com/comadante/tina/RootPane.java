@@ -1,19 +1,43 @@
 package com.comadante.tina;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.List;
+
 public class RootPane extends BorderPane {
 
-    private final ListView listView;
+    private final ListView<String> listView;
     private final ImageView imageView;
+    private final ImageRefreshService imageRefreshService;
 
-    public RootPane() {
-        this.listView = new ListView();
+    public RootPane(EyeballsClient eyeballsClient) {
+        ObservableList<String> names = FXCollections.observableArrayList();
+        listView = new ListView<String>(names);
+        ListData listData = new ListData(names);
         this.imageView = new ImageView();
         setCenter(imageView);
         setLeft(listView);
+        this.imageRefreshService = new ImageRefreshService(imageView, listData, eyeballsClient);
+        this.imageRefreshService.startAsync();
+        this.listView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                byte[] eventImage = eyeballsClient.getEventImage(listData.getMotionEvent(newValue).getEventId());
+                ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(eventImage);
+                Image image = new Image(byteArrayInputStream);
+                imageView.setImage(image);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
 

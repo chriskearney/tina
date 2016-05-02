@@ -9,10 +9,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        RootPane rootPane = new RootPane();
+        EyeballsHttpClient eyeballsHttpClient = new EyeballsHttpClient();
+        RootPane rootPane = new RootPane(eyeballsHttpClient);
         Parent root = rootPane;
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 800, 600));
+        primaryStage.setTitle("Tina");
+        primaryStage.setScene(new Scene(root, 885, 502));
         primaryStage.show();
     }
 
