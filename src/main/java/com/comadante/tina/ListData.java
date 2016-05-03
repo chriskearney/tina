@@ -3,6 +3,9 @@ package com.comadante.tina;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
+
+import java.util.Collections;
 
 public class ListData {
 
@@ -22,6 +25,7 @@ public class ListData {
             }
             if (!found) {
                 observableList.add(motionEvent);
+                SortedList<MotionEvent> sorted = observableList.sorted();
             }
         });
     }
