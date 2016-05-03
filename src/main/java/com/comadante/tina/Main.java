@@ -19,7 +19,7 @@ public class Main extends Application {
         URL resource = Main.class.getClassLoader().getResource("tina.fxml");
         FXMLLoader loader = new FXMLLoader(resource);
         Parent root = loader.load();
-        primaryStage.setTitle("FXML Welcome");
+        primaryStage.setTitle("kearney.us:4444");
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
         primaryStage.setOnCloseRequest(t -> {

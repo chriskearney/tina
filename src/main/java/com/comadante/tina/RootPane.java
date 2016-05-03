@@ -27,16 +27,12 @@ public class RootPane extends BorderPane {
         this.imageRefreshService.startAsync();
         this.listView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             try {
+                Image image;
                 if (newValue.getEventId().equals(MotionEvent.liveview)) {
-                    byte[] latestImage = eyeballsClient.getLatestImage();
-                    ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(latestImage);
-                    Image image = new Image(byteArrayInputStream);
-                    imageView.setImage(image);
-                    return;
+                    image = getImage(eyeballsClient.getLatestImage());
+                } else {
+                    image = getImage(eyeballsClient.getEventImage(newValue.getEventId()));
                 }
-                byte[] eventImage = eyeballsClient.getEventImage(newValue.getEventId());
-                ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(eventImage);
-                Image image = new Image(byteArrayInputStream);
                 imageView.setImage(image);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -44,5 +40,9 @@ public class RootPane extends BorderPane {
         });
     }
 
+    private Image getImage(byte[] bytes) {
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
+        return new Image(byteArrayInputStream);
+    }
 
 }

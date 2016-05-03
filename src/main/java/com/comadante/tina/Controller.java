@@ -24,7 +24,9 @@ public class Controller {
         EyeballsHttpClient eyeballsHttpClient = new EyeballsHttpClient(username, password);
         RootPane rootPane = new RootPane(eyeballsHttpClient);
         Main.primaryStage.setTitle("Tina");
-        Main.primaryStage.setScene(new Scene(rootPane, 885, 502));
+        Scene scene = new Scene(rootPane, 885, 502);
+        scene.getStylesheets().add(Controller.class.getResource("/List.css").toExternalForm());
+        Main.primaryStage.setScene(scene);
         Main.primaryStage.show();
     }
 
