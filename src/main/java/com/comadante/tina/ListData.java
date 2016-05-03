@@ -18,9 +18,9 @@ public class ListData {
     public void add(MotionEvent motionEvent) {
         Platform.runLater(() -> {
             boolean found = false;
-            for (MotionEvent event: observableList) {
+            for (MotionEvent event : observableList) {
                 if (event.getEventId().equals(motionEvent.getEventId())) {
-                   found = true;
+                    found = true;
                 }
             }
             if (!found) {

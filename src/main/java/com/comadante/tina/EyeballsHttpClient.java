@@ -23,7 +23,7 @@ public class EyeballsHttpClient implements EyeballsClient {
     private final String authHeader;
 
     public EyeballsHttpClient(String username, String password) throws IOException {
-        HttpRequest getRequest = requestFactory.buildGetRequest(new GenericUrl("http://kearney.us:4444/event/recent/100"));
+        HttpRequest getRequest = requestFactory.buildGetRequest(new GenericUrl("http://kearney.us:4444/event/recent/1"));
         String auth = username + ":" + password;
         byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(Charset.forName("ISO-8859-1")));
         authHeader = "Basic " + new String(encodedAuth);
